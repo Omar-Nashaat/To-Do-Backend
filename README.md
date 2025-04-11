@@ -28,10 +28,17 @@ A robust RESTful API backend for a Todo application built with Node.js, Express,
    npm install
    ```
 3. Create a `.env` file in the root directory with the following variables:
+
    ```
    MONGODB_URI=your_mongodb_connection_string
    JWT_SECRET=your_jwt_secret_key
    PORT=5000
+
+   (Working example with my MongoDB connection string & JWT secret)
+   MONGODB_URI=mongodb+srv://omar:nashaat9090@cluster0.ma0j9ny.mongodb.net/todo-app?retryWrites=true&w=majority
+   JWT_SECRET=a0f1e2d3c4b5a6d7e8f9g0h1i2j3k4l5m6n7o8p9q0r1s2t3u4v5w6x7y8z9a0b1c2d3
+   PORT=5000
+
    ```
 
 ## Scripts
@@ -65,6 +72,7 @@ backend/
 ### Auth Routes
 
 - `POST /api/auth/register` - Register a new user
+
   ```json
   {
     "username": "john_doe",
@@ -91,10 +99,13 @@ backend/
 ### To-Do List Routes
 
 - `GET /api/todos` - Get all lists for user
+
   - Headers: `token: <token>`
 
 - `POST /api/todos` - Create new list
+
   - Headers: `token: <token>`
+
   ```json
   {
     "title": "My Todo List"
@@ -102,10 +113,13 @@ backend/
   ```
 
 - `GET /api/todos/:id` - Get a specific list
+
   - Headers: `token: <token>`
 
 - `PUT /api/todos/:id` - Update list title
+
   - Headers: `token: <token>`
+
   ```json
   {
     "title": "Updated List Title"
@@ -118,40 +132,36 @@ backend/
 ### Task Routes (per list)
 
 - `POST /api/todos/:todoListId/tasks` - Add task
+
   - Headers: `token: <token>`
+
   ```json
   {
-    "title": "Task Title",
-    "description": "Task Description",
-    "dueDate": "2025-04-20T00:00:00.000Z",
-    "priority": "high"
+    "title": "Task Title"
   }
   ```
 
 - `GET /api/todos/:todoListId/tasks/:taskId` - Get task
+
   - Headers: `token: <token>`
 
 - `PUT /api/todos/:todoListId/tasks/:taskId` - Update task
+
   - Headers: `token: <token>`
+
   ```json
   {
-    "title": "Updated Task Title",
-    "description": "Updated Description",
-    "dueDate": "2025-04-21T00:00:00.000Z",
-    "priority": "medium"
+    "title": "Updated Task Title"
   }
   ```
 
 - `DELETE /api/todos/:todoListId/tasks/:taskId` - Delete task
+
   - Headers: `token: <token>`
 
 - `PATCH /api/todos/:todoListId/tasks/:taskId/complete` - Mark task complete
+
   - Headers: `token: <token>`
-  ```json
-  {
-    "completed": true
-  }
-  ```
 
 - `PUT /api/todos/:todoListId/reorder` - Reorder task list
   - Headers: `token: <token>`
