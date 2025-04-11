@@ -165,7 +165,13 @@ export const getOneTodoList = async (req: Request, res: Response): Promise<void>
       return;
     }
 
-    res.json({ msg: 'List retrieved successfully', list });
+    const totalTasks = list.tasks.length;
+    const completedTasks = list.tasks.filter(task => task.completed).length;
+    const completionPercentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+
+    const listWithPercentage = { ...list.toObject(), completionPercentage };
+
+    res.json({ msg: 'List retrieved successfully', list: listWithPercentage });
   } catch (err: any) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -278,4 +284,3 @@ export const completeTask = async (req: Request, res: Response): Promise<void> =
     res.status(500).json({ msg: 'Server error' });
   }
 };
-
