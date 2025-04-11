@@ -56,8 +56,15 @@ A robust RESTful API backend for a Todo application built with Node.js, Express,
 
 ```
 backend/
-├── src/                # Source files
-├── dist/               # Compiled JavaScript files
+├── src/
+  ├── config/
+  ├── controllers/
+  ├── interfaces/
+  ├── middleware/
+  ├── models/
+  ├── routes/
+  ├── types/
+  └── server.ts
 ├── node_modules/       # Dependencies
 ├── .env               # Environment variables
 ├── .gitignore         # Git ignore file
