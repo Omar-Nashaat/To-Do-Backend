@@ -195,7 +195,8 @@ backend/
 ## Postman/Test
 
 - You can use Postman or Thunder Client to test all routes
-- Remember to attach Authorization header: token: <token> to protected routes
+- Remember to attach Authorization header: token to protected routes
+- attached updated postman collection
 
 ## Author
 
