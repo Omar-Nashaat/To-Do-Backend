@@ -2,9 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 const authMiddleware = (req: Request, res: Response, next: NextFunction): void => {
-  const token = req.header('x-auth-token');
+  const token = req.header('token');
   if (!token) {
-    res.status(401).json({ msg: 'No token, authorization denied' });  // Just send the response, no need for 'return'
+    res.status(401).json({ msg: 'No token, authorization denied' });
     return;  // This will ensure the middleware doesn't continue execution after sending the response
   }
 

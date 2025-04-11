@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User';
 import { IUserPayload } from '../interfaces/IUserPayload';
 
+// REGISTER A NEW USER
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
   const { name, email, password } = req.body;
 
@@ -34,6 +35,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
   }
 };
 
+// LOGIN USER
 export const loginUser = async (req: Request, res: Response): Promise<void> => {
   const { email, password, rememberMe } = req.body;
 
