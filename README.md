@@ -1,203 +1,130 @@
-# To-Do App Backend (Node.js + Express + TypeScript + MongoDB)
+# Todo List Application Backend
 
-A robust RESTful API backend for a Todo application built with Node.js, Express, TypeScript, and MongoDB.
+A RESTful API backend for the Todo List application built with Node.js, Express, and MongoDB.
 
 ## Features
 
-- User authentication and authorization using JWT
-- Full CRUD for to-do lists & tasks
-- Secure password handling with bcrypt
-- Progress percentage per list
-- Task completion & reordering
-- Extensible and clean TypeScript code
-- MongoDB integration for data persistence
-- CORS enabled for cross-origin requests
-- Environment variables support for configuration
+### Todo List Management
+- Create, read, update, and delete todo lists
+- Track completion percentage for each list
+- Support for multiple lists per user
 
-## Prerequisites
+### Task Management
+- Create, read, update, and delete tasks within lists
+- Mark tasks as complete/incomplete
+- Task reordering support
+- Bulk operations support
 
-- Node.js (v14 or higher)
-- MongoDB installed and running
-- TypeScript knowledge
+### Authentication
+- User registration and login
+- JWT-based authentication
+- Secure password hashing
 
-## Installation
-
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Create a `.env` file in the root directory with the following variables:
-
-   ```
-   MONGODB_URI=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret_key
-   PORT=5000
-
-   (Working example with my MongoDB connection string & JWT secret)
-   MONGODB_URI=mongodb+srv://omar:nashaat9090@cluster0.ma0j9ny.mongodb.net/todo-app?retryWrites=true&w=majority
-   JWT_SECRET=a0f1e2d3c4b5a6d7e8f9g0h1i2j3k4l5m6n7o8p9q0r1s2t3u4v5w6x7y8z9a0b1c2d3
-   PORT=5000
-
-   ```
-
-## Scripts
-
-- Build the TypeScript project:
-  ```bash
-  npx tsc
-  ```
-- Start the development server:
-  ```bash
-  node dist/server.js
-  ```
-
-## Project Structure
-
-```
-backend/
-├── src/
-  ├── config/
-  ├── controllers/
-  ├── interfaces/
-  ├── middleware/
-  ├── models/
-  ├── routes/
-  ├── types/
-  └── server.ts
-├── node_modules/       # Dependencies
-├── .env               # Environment variables
-├── .gitignore         # Git ignore file
-├── package.json       # Project metadata and dependencies
-├── package-lock.json  # Dependency lock file
-├── tsconfig.json      # TypeScript configuration
-└── README.md         # Project documentation
-```
+### API Features
+- RESTful endpoints
+- Error handling and validation
+- Proper HTTP status codes
+- JSON responses
 
 ## API Endpoints
 
-### Auth Routes
+### Authentication
+- POST `/api/auth/register` - Register a new user
+- POST `/api/auth/login` - Login user
 
-- `POST /api/auth/register` - Register a new user
+### Todo Lists
+- GET `/api/todos` - Get all todo lists
+- GET `/api/todos/:id` - Get a specific todo list
+- POST `/api/todos` - Create a new todo list
+- PUT `/api/todos/:id` - Update a todo list
+- DELETE `/api/todos/:id` - Delete a todo list
 
-  ```json
-  {
-    "username": "john_doe",
-    "email": "john@example.com",
-    "password": "securePassword123"
-  }
-  ```
-
-- `POST /api/auth/login` - Login and receive token
-  ```json
-  {
-    "email": "john@example.com",
-    "password": "securePassword123"
-  }
-  ```
-  Response:
-  ```json
-  {
-    "token": "jwt_token_here",
-    "userId": "user_id_here"
-  }
-  ```
-
-### To-Do List Routes
-
-- `GET /api/todos` - Get all lists for user
-
-  - Headers: `token: <token>`
-
-- `POST /api/todos` - Create new list
-
-  - Headers: `token: <token>`
-
-  ```json
-  {
-    "title": "My Todo List"
-  }
-  ```
-
-- `GET /api/todos/:id` - Get a specific list
-
-  - Headers: `token: <token>`
-
-- `PUT /api/todos/:id` - Update list title
-
-  - Headers: `token: <token>`
-
-  ```json
-  {
-    "title": "Updated List Title"
-  }
-  ```
-
-- `DELETE /api/todos/:id` - Delete a list
-  - Headers: `token: <token>`
-
-### Task Routes (per list)
-
-- `POST /api/todos/:todoListId/tasks` - Add task
-
-  - Headers: `token: <token>`
-
-  ```json
-  {
-    "title": "Task Title"
-  }
-  ```
-
-- `GET /api/todos/:todoListId/tasks/:taskId` - Get task
-
-  - Headers: `token: <token>`
-
-- `PUT /api/todos/:todoListId/tasks/:taskId` - Update task
-
-  - Headers: `token: <token>`
-
-  ```json
-  {
-    "title": "Updated Task Title"
-  }
-  ```
-
-- `DELETE /api/todos/:todoListId/tasks/:taskId` - Delete task
-
-  - Headers: `token: <token>`
-
-- `PATCH /api/todos/:todoListId/tasks/:taskId/complete` - Mark task complete
-
-  - Headers: `token: <token>`
-
-- `PUT /api/todos/:todoListId/reorder` - Reorder task list
-  - Headers: `token: <token>`
-  ```json
-  {
-    "taskIds": ["taskId1", "taskId2", "taskId3"]
-  }
-  ```
-
-## Middleware
-
-- authMiddleware.ts: Verifies JWT and injects req.user
+### Tasks
+- GET `/api/todos/:id/tasks` - Get all tasks in a list
+- POST `/api/todos/:id/tasks` - Add a new task
+- PUT `/api/todos/:id/tasks/:taskId` - Update a task
+- DELETE `/api/todos/:id/tasks/:taskId` - Delete a task
+- PUT `/api/todos/:id/reorder` - Reorder tasks in a list
+- PATCH `/api/todos/:id/complete` - Toggle a task completion
 
 ## Technologies Used
-
 - Node.js
 - Express.js
+- MongoDB with Mongoose
 - TypeScript
-- MongoDB
-- JWT for authentication
-- bcryptjs for password hashing
-- CORS for cross-origin resource sharing
+- JSON Web Tokens (JWT)
+- bcrypt for password hashing
 
-## Postman/Test
+## Project Structure
+```
+src/
+├── config/                # Configuration files
+│   └── db.ts             # Database connection setup
+├── controllers/          # Route controllers
+│   ├── authController.ts # Authentication logic
+│   └── todoController.ts # Todo & tasks logic
+├── interfaces/          # TypeScript interfaces
+│   ├── ITask.ts        # Task interface
+│   ├── ITodoList.ts    # Todo list interface
+│   ├── IUser.ts        # User model interface
+│   └── IUserPayload.ts # JWT payload interface
+├── middleware/         # Custom middleware
+│   └── authMiddleware.ts # JWT authentication
+├── models/            # Mongoose models
+│   ├── TodoList.ts    # Todo list schema
+│   └── User.ts        # User schema
+├── routes/            # API routes
+│   ├── auth.ts        # Auth endpoints
+│   └── todos.ts       # Todo endpoints
+├── types/             # Type definitions
+│   └── express/       # Express type extensions
+└── server.ts          # Main application entry
+```
 
-- You can use Postman or Thunder Client to test all routes
-- Remember to attach Authorization header: token to protected routes
-- Attached updated postman collection
+## Getting Started
 
-## Author
+1. Install dependencies:
+```bash
+npm install
+```
 
-Omar Nashaat
+2. Set up environment variables in `.env`:
+```
+PORT=5000
+MONGODB_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+```
+
+Working exmaple (my credentials):
+```
+MONGODB_URI=mongodb+srv://omar:nashaat9090@cluster0.ma0j9ny.mongodb.net/todo-app?retryWrites=true&w=majority
+JWT_SECRET=a0f1e2d3c4b5a6d7e8f9g0h1i2j3k4l5m6n7o8p9q0r1s2t3u4v5w6x7y8z9a0b1c2d3
+PORT=5000
+
+```
+
+3. Compile the TypeScript files:
+```bash
+npx tsc
+```
+
+4. Start the development server:
+```bash
+node dist/server.js
+```
+
+## Error Handling
+The API uses standard HTTP status codes:
+- 200: Success
+- 201: Created
+- 400: Bad Request
+- 401: Unauthorized
+- 404: Not Found
+- 500: Server Error
+
+## Contributing
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a new Pull Request

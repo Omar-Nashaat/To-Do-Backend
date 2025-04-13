@@ -274,7 +274,7 @@ export const completeTask = async (req: Request, res: Response): Promise<void> =
       return;
     }
 
-    task.completed = true;
+    task.completed = !task.completed;
     await list.save();
 
     res.json({ msg: 'Task marked as completed', task });
